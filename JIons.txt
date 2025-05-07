@@ -1,0 +1,6 @@
+SELECT Students.Name, Enrollments.Course
+FROM Students
+LEFT JOIN Enrollments
+ON Students.ID = Enrollments.ID;
+
+
