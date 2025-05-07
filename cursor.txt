@@ -1,0 +1,56 @@
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+);
+ 
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE ProcessStudentData()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE student_name VARCHAR(100);
+    DECLARE student_age INT;
+
+    -- Declare cursor for selecting all student data
+    DECLARE student_cursor CURSOR FOR
+    SELECT name, age FROM students;
+
+    -- Declare a handler to end the loop
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Open the cursor
+    OPEN student_cursor;
+
+    -- Loop through the cursor and fetch data row by row
+    read_loop: LOOP
+        FETCH student_cursor INTO student_name, student_age;
+
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Process the data (for example, just printing)
+        SELECT CONCAT('Processing Student: ', student_name, ', Age: ', student_age);
+
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE student_cursor;
+END //
+
+DELIMITER ;
+ 
+
+
+
+
+//// call procedure ///
+
+CALL ProcessStudentData();
+ 
+

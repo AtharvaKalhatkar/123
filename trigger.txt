@@ -1,0 +1,33 @@
+CREATE TABLE students (
+  student_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100),
+  age INT
+);
+
+
+
+
+2. Create audit_log table:
+sql
+Copy
+Edit
+CREATE TABLE audit_log (
+  log_id INT PRIMARY KEY AUTO_INCREMENT,
+  action VARCHAR(100),
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+3. Create a Trigger to Log Inserts into students:
+
+DELIMITER //
+
+CREATE TRIGGER after_student_insert
+AFTER INSERT ON students
+FOR EACH ROW
+BEGIN
+  INSERT INTO audit_log (action)
+  VALUES (CONCAT('New student added: ', NEW.name));
+END //
+
+DELIMITER ;

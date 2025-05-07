@@ -1,0 +1,33 @@
+CREATE DATABASE event_db;
+USE event_db;
+
+
+CREATE TABLE events (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  event_name VARCHAR(100) NOT NULL,
+  event_date DATE NOT NULL,
+  event_time TIME NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+DELIMITER //
+
+CREATE PROCEDURE InsertEvent(
+  IN e_name VARCHAR(100),
+  IN e_date DATE,
+  IN e_time TIME
+)
+BEGIN
+  INSERT INTO events (event_name, event_date, event_time)
+  VALUES (e_name, e_date, e_time);
+END //
+
+DELIMITER ;
+
+//call the procedure 
+CALL InsertEvent('Lunar Eclipse', '2025-05-20', '22:30:00');
+
+
+SELECT * FROM events;
+

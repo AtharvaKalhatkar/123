@@ -1,0 +1,19 @@
+-- Original Table
+CREATE TABLE Employees (
+    ID INT,
+    Name VARCHAR(50),
+    Salary INT,
+    Department VARCHAR(50)
+);
+
+
+
+
+-- Create a view to show only employees from IT department
+CREATE VIEW IT_Employees AS
+SELECT ID, Name, Salary
+FROM Employees
+WHERE Department = 'IT';
+
+-- Use the view like a table
+SELECT * FROM IT_Employees;
